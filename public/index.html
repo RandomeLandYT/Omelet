@@ -1,10 +1,44 @@
 <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OmeletChat</title>
     <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Estilos adicionales para el formulario de ingreso de usuario */
+        #user-entry-container {
+            background-color: #fff;
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            margin-top: 10px; /* Se cambió de 30px a 10px */
+        }
+        #username-text {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        #usernameInput {
+            width: 300px;
+            padding: 10px;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        #setUsernameButton {
+            width: 150px;
+            padding: 10px;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        #header {
+            text-align: center;
+        }
+        #connectedClientsCount {
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
 
@@ -15,7 +49,12 @@
             <h1>Chat</h1>
             <p id="connectedClientsCount">Conectados: 0</p> <!-- Agregamos el contador aquí -->
         </div>
-        <div id="chat-container">
+        <div id="user-entry-container"> <!-- Contenedor para el área de ingreso de usuario -->
+            <p id="username-text">Bienvenido!</p> <!-- Cambiamos el texto decorativo -->
+            <input type="text" id="usernameInput" placeholder="Ingresa tu nombre de usuario...">
+            <button id="setUsernameButton">Establecer Nombre</button>
+        </div>
+        <div id="chat-container" style="display: none;">
             <div id="chat-log">
                 <ul id="messages"></ul>
             </div>

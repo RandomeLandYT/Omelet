@@ -5,6 +5,23 @@ document.addEventListener('DOMContentLoaded', () => {
     const sendButton = document.getElementById('sendButton');
     const messagesList = document.getElementById('messages');
     const connectedClientsCount = document.getElementById('connectedClientsCount');
+    const usernameInput = document.getElementById('usernameInput');
+    const setUsernameButton = document.getElementById('setUsernameButton');
+    const chatContainer = document.getElementById('chat-container');
+    const userEntryContainer = document.getElementById('user-entry-container');
+
+    setUsernameButton.addEventListener('click', () => {
+        const username = usernameInput.value.trim();
+        if (username !== '') {
+            setUsername(username);
+        }
+    });
+
+    function setUsername(username) {
+        socket.emit('change username', username);
+        userEntryContainer.style.display = 'none';
+        chatContainer.style.display = 'block';
+    }
 
     // Verificar la conexión al servidor
     socket.on('connect', () => {
@@ -23,24 +40,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function sendMessage() {
         const message = messageInput.value.trim();
-        const username = 'Extraño'; // Nombre predeterminado
         if (message !== '') {
             console.log('Enviando mensaje al servidor:', message);
-            // Enviar el mensaje al servidor con el evento 'chat message'
-            socket.emit('chat message', { username, message }); // Enviamos tanto el nombre como el mensaje
+            socket.emit('chat message', message);
             messageInput.value = '';
         }
     }
 
     // Manejar el evento 'chat message' del servidor
     socket.on('chat message', (data) => {
-        // Agregar el mensaje recibido a la lista de mensajes del chat
         console.log('Mensaje recibido del servidor:', data);
-        const { username, message } = data; // Desestructuramos el objeto para obtener el nombre y el mensaje
         const listItem = document.createElement('li');
-        listItem.textContent = `${username}: ${message}`; // Agregamos el nombre al mensaje
+        listItem.textContent = `${data.username}: ${data.message}`;
         messagesList.appendChild(listItem);
-        // Desplazar la lista de mensajes hacia abajo para mostrar el último mensaje
         messagesList.scrollTop = messagesList.scrollHeight;
     });
 
